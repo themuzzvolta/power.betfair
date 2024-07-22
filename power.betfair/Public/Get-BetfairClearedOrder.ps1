@@ -1,4 +1,4 @@
-Function Get-ClearedOrder {
+Function Get-BetfairClearedOrder {
     <#
     .SYNOPSIS
     Returns a list of settled bets based on the bet status, ordered by settled date.
@@ -64,9 +64,9 @@ Function Get-ClearedOrder {
     Note that there is a page size limit of 1000. A value of zero indicates that you would like all records (including and from 'fromRecord') up to the limit.
 
     .EXAMPLE
-    Get-ClearedOrder
+    Get-BetfairClearedOrder
 
-    Get-ClearedOrder -marketIds "1477", "1566"
+    Get-BetfairClearedOrder -marketIds "1477", "1566"
 
     .NOTES
     General notes
@@ -137,7 +137,13 @@ Function Get-ClearedOrder {
 
     )
 
-    $Path = '/betting/rest/v1.0/listClearedOrders/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -147,11 +153,16 @@ Function Get-ClearedOrder {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
-    $Body = @{}
+    # Setup base params
+    $Body = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listClearedOrders"
+        params  = @{}
+    }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.Add($_.Key, $_.Value)
+        $Body.params.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -159,13 +170,13 @@ Function Get-ClearedOrder {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

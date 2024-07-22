@@ -1,38 +1,37 @@
 ---
 external help file: power.betfair-help.xml
 Module Name: power.betfair
-online version: https://go.microsoft.com/fwlink/?LinkID=2097014
+online version:
 schema: 2.0.0
 ---
 
-# Get-MarketType
+# Get-BetfairTimeRange
 
 ## SYNOPSIS
-Returns a list of market types (i.e.
-MATCH_ODDS, NEXT_GOAL) associated with the markets selected by the MarketFilter.
-The market types are always the same, regardless of locale.
+Returns a list of Competitions by time range.
 
 ## SYNTAX
 
 ```
-Get-MarketType [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
- [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>] [[-bspOnly] <Boolean>]
- [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>] [[-marketBettingTypes] <String[]>]
- [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>] [[-marketStartTime] <Hashtable>]
- [[-withOrders] <String[]>] [[-raceTypes] <String[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-BetfairTimeRange [[-textQuery] <String>] [-granularity] <String> [[-eventTypeIds] <String[]>]
+ [[-eventIds] <String[]>] [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>]
+ [[-bspOnly] <Boolean>] [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>]
+ [[-marketBettingTypes] <String[]>] [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>]
+ [[-marketStartTime] <Hashtable>] [[-withOrders] <String[]>] [[-raceTypes] <String[]>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a list of market types (i.e.
-MATCH_ODDS, NEXT_GOAL) associated with the markets selected by the MarketFilter.
-The market types are always the same, regardless of locale.
+Returns a list of Competitions by time range.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-MarketType -textQuery "MATCH_ODDS"
+Get-BetfairTimeRange -textQuery "rugby"
 ```
+
+Get-BetfairTimeRange -textQuery "rugby"
 
 ## PARAMETERS
 
@@ -53,6 +52,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -granularity
+Restrict markets time; DAYS, HOURS or MINUTES
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -eventTypeIds
 Restrict markets by event type associated with the market.
 (i.e., Football, Hockey, etc)
@@ -63,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,7 +92,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -93,7 +107,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -108,7 +122,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -124,7 +138,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -140,7 +154,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -156,7 +170,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -172,7 +186,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -188,7 +202,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -204,7 +218,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -221,7 +235,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -236,7 +250,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -251,7 +265,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -267,7 +281,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

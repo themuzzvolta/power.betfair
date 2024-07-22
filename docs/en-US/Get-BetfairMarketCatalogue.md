@@ -5,15 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-Events
+# Get-BetfairMarketCatalogue
 
 ## SYNOPSIS
-Returns a list of Events.
+Returns a list of information about published (ACTIVE/SUSPENDED) markets that does not change (or changes very rarely).
 
 ## SYNTAX
 
 ```
-Get-Events [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
+Get-BetfairMarketCatalogue [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
  [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>] [[-bspOnly] <Boolean>]
  [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>] [[-marketBettingTypes] <String[]>]
  [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>] [[-marketStartTime] <Hashtable>]
@@ -21,17 +21,19 @@ Get-Events [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <St
 ```
 
 ## DESCRIPTION
-Returns a list of Events (i.e, Reading vs.
-Man United) associated with the markets selected by the MarketFilter.
+Returns a list of information about published (ACTIVE/SUSPENDED) markets that does not change (or changes very rarely).
+You use listMarketCatalogue to retrieve the name of the market, the names of selections and other information about markets.
+Market Data Request Limits apply to requests made to listMarketCatalogue.
+Please note: listMarketCatalogue does not return markets that are CLOSED.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-Events -eventIds "1"
+Get-BetfairMarketCatalogue -textQuery "AU"
 ```
 
-Get-Events -eventIds "1"
+Get-BetfairMarketCatalogue -textQuery "AU"
 
 ## PARAMETERS
 

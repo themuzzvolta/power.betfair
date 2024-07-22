@@ -1,4 +1,4 @@
-Function Get-MarketType {
+Function Get-BetfairMarketType {
     <#
     .SYNOPSIS
     Returns a list of market types (i.e. MATCH_ODDS, NEXT_GOAL) associated with the markets selected by the MarketFilter.
@@ -59,9 +59,9 @@ Function Get-MarketType {
     Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
     .EXAMPLE
-    Get-MarketType -textQuery "MATCH_ODDS"
+    Get-BetfairMarketType -textQuery "MATCH_ODDS"
 
-    Get-MarketType -textQuery "MATCH_ODDS"
+    Get-BetfairMarketType -textQuery "MATCH_ODDS"
 
     .NOTES
     General notes
@@ -133,7 +133,13 @@ Function Get-MarketType {
 
     )
 
-    $Path = '/betting/rest/v1.0/listMarketTypes/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -143,14 +149,19 @@ Function Get-MarketType {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
+    # Setup base params
     $Body = @{
-        filter = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listMarketTypes"
+        params  = @{
+            filter = @{
+            }
         }
     }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.filter.Add($_.Key, $_.Value)
+        $Body.params.filter.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -158,13 +169,13 @@ Function Get-MarketType {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

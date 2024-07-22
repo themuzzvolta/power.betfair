@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-RunnerBook
+# Get-BetfairRunnerBook
 
 ## SYNOPSIS
 Returns a list of dynamic data about a market and a specified runner.
@@ -14,7 +14,7 @@ Dynamic data includes prices, the status of the market, the status of selections
 ## SYNTAX
 
 ```
-Get-RunnerBook [-marketId] <String> [-selectionId] <String> [[-handicap] <Double>]
+Get-BetfairRunnerBook [-marketId] <String> [-selectionId] <String> [[-handicap] <Double>]
  [[-priceProjection] <Hashtable>] [[-orderProjection] <String>] [[-matchProjection] <String>]
  [[-includeOverallPosition] <Boolean>] [[-partitionMatchedByStrategyRef] <Boolean>]
  [[-customerStrategyRefs] <String[]>] [[-currencyCode] <String>] [[-locale] <String>]
@@ -29,10 +29,10 @@ Dynamic data includes prices, the status of the market, the status of selections
 
 ### EXAMPLE 1
 ```
-Get-RunnerBook -marketId "1477" -selectionId "1566"
+Get-BetfairRunnerBook -marketId "1477" -selectionId "1566"
 ```
 
-Get-RunnerBook -marketId "1477" -selectionId "1566"
+Get-BetfairRunnerBook -marketId "1477" -selectionId "1566"
 
 ## PARAMETERS
 

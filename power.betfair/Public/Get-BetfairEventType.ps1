@@ -1,10 +1,10 @@
-Function Get-Competition {
+Function Get-BetfairEventType {
     <#
     .SYNOPSIS
-    Returns a list of Competitions.
+    Returns a list of Events (i.e, Reading vs. Man United) associated with the markets selected by the MarketFilter.
 
     .DESCRIPTION
-    Returns a list of Competitions (i.e., World Cup 2013) associated with the markets selected by the MarketFilter. Currently only Football markets have an associated competition.
+    Returns a list of Events (i.e, Reading vs. Man United) associated with the markets selected by the MarketFilter.
 
     .PARAMETER textQuery
     Restrict markets by any text associated with the Event name.
@@ -57,9 +57,9 @@ Function Get-Competition {
     Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
     .EXAMPLE
-    Get-Competition -textQuery "rugby"
+    Get-BetfairEventType -eventTypeId 1477
 
-    Get-Competition -textQuery "rugby"
+    Get-BetfairEventType -eventTypeId 1477
 
     .NOTES
     General notes
@@ -131,8 +131,13 @@ Function Get-Competition {
 
     )
 
-    # Rest endpoint
-    $Path = '/betting/rest/v1.0/listCompetitions/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -142,14 +147,19 @@ Function Get-Competition {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
+    # Setup base params
     $Body = @{
-        filter = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listEventTypes"
+        params  = @{
+            filter = @{
+            }
         }
     }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.filter.Add($_.Key, $_.Value)
+        $Body.params.filter.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -157,13 +167,13 @@ Function Get-Competition {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

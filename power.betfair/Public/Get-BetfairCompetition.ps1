@@ -1,18 +1,15 @@
-Function Get-TimeRange {
+Function Get-BetfairCompetition {
     <#
     .SYNOPSIS
-    Returns a list of Competitions by time range.
+    Returns a list of Competitions.
 
     .DESCRIPTION
-    Returns a list of Competitions by time range.
+    Returns a list of Competitions (i.e., World Cup 2013) associated with the markets selected by the MarketFilter. Currently only Football markets have an associated competition.
 
     .PARAMETER textQuery
     Restrict markets by any text associated with the Event name.
     You can include a wildcard (*) character as long as it is not the first character.
     Please note - the textQuery field doesn't evaluate market or selection names.
-
-    .PARAMETER granularity
-    Restrict markets time; DAYS, HOURS or MINUTES
 
     .PARAMETER eventTypeIds
     Restrict markets by event type associated with the market. (i.e., Football, Hockey, etc)
@@ -60,9 +57,9 @@ Function Get-TimeRange {
     Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
     .EXAMPLE
-    Get-TimeRange -textQuery "rugby"
+    Get-BetfairCompetition -textQuery "rugby"
 
-    Get-TimeRange -textQuery "rugby"
+    Get-BetfairCompetition -textQuery "rugby"
 
     .NOTES
     General notes
@@ -75,10 +72,6 @@ Function Get-TimeRange {
         [parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [String]$textQuery,
-
-        [parameter(Mandatory=$true)]
-        [ValidateSet('DAYS', 'HOURS', 'MINUTES')]
-        [String]$granularity,
 
         [parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
@@ -138,8 +131,13 @@ Function Get-TimeRange {
 
     )
 
-    # Rest endpoint
-    $Path = '/betting/rest/v1.0/listTimeRanges/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -149,15 +147,19 @@ Function Get-TimeRange {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
+    # Setup base params
     $Body = @{
-        filter = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listCompetitions"
+        params  = @{
+            filter = @{
+            }
         }
-        granularity = $granularity
     }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.filter.Add($_.Key, $_.Value)
+        $Body.params.filter.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -165,13 +167,13 @@ Function Get-TimeRange {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }
