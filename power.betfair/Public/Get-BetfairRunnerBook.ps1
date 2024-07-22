@@ -15,7 +15,7 @@ Function Get-BetfairRunnerBook {
     The unique id for the runnner..
 
     .PARAMETER handicap
-    The handicap associated with the runner in case of Asian handicap market
+    The handicap associated with the runner in case of Asian handicap market.
 
     .PARAMETER priceProjection
     The projection of price data you want to receive in the response.
@@ -44,7 +44,7 @@ Function Get-BetfairRunnerBook {
     The language used for the response. If not specified, the default is returned.
 
     .PARAMETER matchedSince
-    If you ask for orders, restricts the results to orders that have at least one fragment matched since
+    If you ask for orders, restricts the results to orders that have at least one fragment matched since.
     the specified date (all matched fragments of such an order will be returned even if some were matched before the specified date).
     All EXECUTABLE orders will be returned regardless of matched date.
 
@@ -59,7 +59,7 @@ Function Get-BetfairRunnerBook {
     Get-BetfairRunnerBook -marketId "1477" -selectionId "1566"
 
     .NOTES
-    General notes
+    General notes.
     #>
 
     [CmdletBinding()][OutputType('System.Management.Automation.PSObject')]

@@ -26,17 +26,16 @@ Function Get-BetfairCurrentOrder {
     Optionally restricts the results to the specified customer order references.
 
     .PARAMETER dateRange
-    Optionally restricts the results to be from/to the specified date, these dates are contextual to the orders being returned
-    and therefore the dates used to filter on will change to placed,
-    matched, voided or settled dates depending on the orderBy. This date is inclusive,
-    i.e. if an order was placed on exactly this date (to the millisecond) then it will be included in the results.
-    If the from is later than the to, no results will be returned
+    Optionally restricts the results to be from/to the specified date, these dates are contextual to the orders being returned.
+    and therefore the dates used to filter on will change to placed, matched, voided or settled dates depending on the orderBy.
+    This date is inclusive, i.e. if an order was placed on exactly this date (to the millisecond) then it will be included in the results.
+    If the from is later than the to, no results will be returned.
 
     .PARAMETER orderBy
     Specifies how the results will be ordered. If no value is passed in, it defaults to BY_BET.
-    Also acts as a filter such that only orders with a valid value in the field being ordered by will be returned
-    (i.e. BY_VOID_TIME returns only voided orders, BY_SETTLED_TIME (applies to partially settled markets) returns only
-    settled orders and BY_MATCH_TIME returns only orders with a matched date (voided, settled, matched orders)).
+    Also acts as a filter such that only orders with a valid value in the field being ordered by will be returned.
+    (i.e. BY_VOID_TIME returns only voided orders, BY_SETTLED_TIME (applies to partially settled markets).
+     returns only settled orders and BY_MATCH_TIME returns only orders with a matched date (voided, settled, matched orders)).
 
     .PARAMETER fromRecord
     from as a hashtable

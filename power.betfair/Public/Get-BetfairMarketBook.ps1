@@ -36,7 +36,7 @@ Function Get-BetfairMarketBook {
     The language used for the response. If not specified, the default is returned.
 
     .PARAMETER matchedSince
-    If you ask for orders, restricts the results to orders that have at least one fragment matched since
+    If you ask for orders, restricts the results to orders that have at least one fragment matched since.
     the specified date (all matched fragments of such an order will be returned even if some were matched before the specified date).
     All EXECUTABLE orders will be returned regardless of matched date.
 

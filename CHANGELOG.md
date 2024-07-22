@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.4] 22/07/2024
+
+Fixed markdown documentation
+Added account operations
+Added update and remove order functions
+
 ## [0.1.3] 22/07/2024
 
 Renamed all functions to include 'Betfair' in the name

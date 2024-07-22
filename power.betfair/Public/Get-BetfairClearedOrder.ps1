@@ -17,9 +17,6 @@ Function Get-BetfairClearedOrder {
     .PARAMETER eventIds
     Optionally restricts the results to the specified Event IDs.
 
-    .PARAMETER Optionally restricts the results to the specified Event IDs.
-    The orders you want to receive in the response.
-
     .PARAMETER betIds
     If you ask for orders, restricts the results to orders with the specified bet IDs.
     Omitting this parameter means that all bets will be included in the response.
