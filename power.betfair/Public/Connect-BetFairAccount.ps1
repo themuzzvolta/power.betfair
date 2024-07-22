@@ -1,4 +1,4 @@
-Function Connect-BetFairAccount {
+Function Connect-BetfairAccount {
     <#
     .SYNOPSIS
     Function for creating an authenticated session to BetFair

@@ -1,4 +1,4 @@
-Function Get-CurrentOrder {
+Function Get-BetfairCurrentOrder {
     <#
     .SYNOPSIS
     Returns a list of dynamic data about markets. Dynamic data includes prices, the status of the market, the status of selections, the traded volume, and the status of any orders you have placed in the market.
@@ -51,9 +51,9 @@ Function Get-CurrentOrder {
     Include sortDir
 
     .EXAMPLE
-    Get-CurrentOrder
+    Get-BetfairCurrentOrder
 
-    Get-CurrentOrder -marketIds "1477", "1566"
+    Get-BetfairCurrentOrder -marketIds "1477", "1566"
 
     .NOTES
     General notes
@@ -109,7 +109,13 @@ Function Get-CurrentOrder {
 
     )
 
-    $Path = '/betting/rest/v1.0/listCurrentOrders/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -119,11 +125,16 @@ Function Get-CurrentOrder {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
-    $Body = @{}
+    # Setup base params
+    $Body = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listCurrentOrders"
+        params  = @{}
+    }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.Add($_.Key, $_.Value)
+        $Body.params.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -131,13 +142,13 @@ Function Get-CurrentOrder {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

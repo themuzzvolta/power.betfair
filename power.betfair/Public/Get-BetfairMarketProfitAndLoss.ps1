@@ -1,4 +1,4 @@
-Function Get-MarketProfitAndLoss {
+Function Get-BetfairMarketProfitAndLoss {
     <#
     .SYNOPSIS
     Retrieve profit and loss for a given list of OPEN markets. The values are calculated using matched bets and optionally settled bets.
@@ -21,9 +21,9 @@ Function Get-MarketProfitAndLoss {
     Option to return profit and loss net of users current commission rate for this market including any special tariffs. Defaults to false if not specified.
 
     .EXAMPLE
-    Get-MarketProfitAndLoss
+    Get-BetfairMarketProfitAndLoss
 
-    Get-MarketProfitAndLoss -marketIds "1477", "1566"
+    Get-BetfairMarketProfitAndLoss -marketIds "1477", "1566"
 
     .NOTES
     General notes
@@ -51,7 +51,13 @@ Function Get-MarketProfitAndLoss {
 
     )
 
-    $Path = '/betting/rest/v1.0/listMarketProfitAndLoss/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -61,11 +67,16 @@ Function Get-MarketProfitAndLoss {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
-    $Body = @{}
+    # Setup base params
+    $Body = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listMarketProfitAndLoss"
+        params  = @{}
+    }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.Add($_.Key, $_.Value)
+        $Body.params.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -73,13 +84,13 @@ Function Get-MarketProfitAndLoss {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

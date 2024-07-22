@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-MarketProfitAndLoss
+# Get-BetfairMarketProfitAndLoss
 
 ## SYNOPSIS
 Retrieve profit and loss for a given list of OPEN markets.
@@ -15,7 +15,7 @@ Only odds (MarketBettingType = ODDS) markets  are implemented, markets of other 
 ## SYNTAX
 
 ```
-Get-MarketProfitAndLoss [[-marketIds] <String[]>] [[-includeSettledBets] <Boolean>]
+Get-BetfairMarketProfitAndLoss [[-marketIds] <String[]>] [[-includeSettledBets] <Boolean>]
  [[-includeBspBets] <Boolean>] [[-netOfCommission] <Boolean>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
@@ -29,10 +29,10 @@ Only odds (MarketBettingType = ODDS) markets  are implemented, markets of other 
 
 ### EXAMPLE 1
 ```
-Get-MarketProfitAndLoss
+Get-BetfairMarketProfitAndLoss
 ```
 
-Get-MarketProfitAndLoss -marketIds "1477", "1566"
+Get-BetfairMarketProfitAndLoss -marketIds "1477", "1566"
 
 ## PARAMETERS
 

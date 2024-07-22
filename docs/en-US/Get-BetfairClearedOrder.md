@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-ClearedOrder
+# Get-BetfairClearedOrder
 
 ## SYNOPSIS
 Returns a list of settled bets based on the bet status, ordered by settled date.
@@ -14,7 +14,7 @@ To retrieve more than 1000 records, you need to make use of the fromRecord and r
 ## SYNTAX
 
 ```
-Get-ClearedOrder [[-betStatus] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
+Get-BetfairClearedOrder [[-betStatus] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
  [[-marketIds] <String[]>] [[-runnerIds] <String[]>] [[-betIds] <String[]>] [[-customerOrderRefs] <String[]>]
  [[-customerStrategyRefs] <String[]>] [[-side] <String>] [[-settledDateRange] <Hashtable>]
  [[-groupBy] <String>] [[-locale] <String>] [[-fromRecord] <Int32>] [[-recordCount] <Int32>]
@@ -29,10 +29,10 @@ To retrieve more than 1000 records, you need to make use of the fromRecord and r
 
 ### EXAMPLE 1
 ```
-Get-ClearedOrder
+Get-BetfairClearedOrder
 ```
 
-Get-ClearedOrder -marketIds "1477", "1566"
+Get-BetfairClearedOrder -marketIds "1477", "1566"
 
 ## PARAMETERS
 
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -eventIds
-{{ Fill eventIds Description }}
+Optionally restricts the results to the specified Event IDs.
 
 ```yaml
 Type: String[]

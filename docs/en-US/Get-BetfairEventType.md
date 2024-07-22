@@ -1,11 +1,11 @@
 ---
 external help file: power.betfair-help.xml
 Module Name: power.betfair
-online version: https://go.microsoft.com/fwlink/?LinkID=2097014
+online version:
 schema: 2.0.0
 ---
 
-# Get-EventType
+# Get-BetfairEventType
 
 ## SYNOPSIS
 Returns a list of Events (i.e, Reading vs.
@@ -14,7 +14,7 @@ Man United) associated with the markets selected by the MarketFilter.
 ## SYNTAX
 
 ```
-Get-EventType [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
+Get-BetfairEventType [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
  [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>] [[-bspOnly] <Boolean>]
  [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>] [[-marketBettingTypes] <String[]>]
  [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>] [[-marketStartTime] <Hashtable>]
@@ -29,8 +29,10 @@ Man United) associated with the markets selected by the MarketFilter.
 
 ### EXAMPLE 1
 ```
-Get-EventType -Username "john.snow@got.com" -Password $secureString -APIKey $apiKey
+Get-BetfairEventType -eventTypeId 1477
 ```
+
+Get-BetfairEventType -eventTypeId 1477
 
 ## PARAMETERS
 

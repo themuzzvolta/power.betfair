@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.3] 22/07/2024
+
+Renamed all functions to include 'Betfair' in the name
+Allowed for classes in the psm1 file
+Added placeInstruction class
+Refactored all functions to use JSON-RPC instead of REST for faster queries
+Added New-BetfairOrder for bet placement
+
 ## [0.1.2] 20/07/2024
 
 Defined Functions Get-ClearedOrder, Get-CurrentOrder, Get-MarketProfitAndLoss, Get-RunnerBook

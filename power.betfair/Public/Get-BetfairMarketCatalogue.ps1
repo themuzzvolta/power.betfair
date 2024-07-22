@@ -1,4 +1,4 @@
-Function Get-MarketCatalogue {
+Function Get-BetfairMarketCatalogue {
     <#
     .SYNOPSIS
     Returns a list of information about published (ACTIVE/SUSPENDED) markets that does not change (or changes very rarely).
@@ -60,9 +60,9 @@ Function Get-MarketCatalogue {
     Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
     .EXAMPLE
-    Get-MarketCatalogue -textQuery "AU"
+    Get-BetfairMarketCatalogue -textQuery "AU"
 
-    Get-MarketCatalogue -textQuery "AU"
+    Get-BetfairMarketCatalogue -textQuery "AU"
 
     .NOTES
     General notes
@@ -134,7 +134,13 @@ Function Get-MarketCatalogue {
 
     )
 
-    $Path = '/betting/rest/v1.0/listMarketCatalogue/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -144,18 +150,31 @@ Function Get-MarketCatalogue {
         'X-Authentication' = $BetFair.token
     }
 
-    $marketProjection = @('COMPETITION','EVENT','EVENT_TYPE','MARKET_START_TIME','MARKET_DESCRIPTION','RUNNER_DESCRIPTION','RUNNER_METADATA')
+    $marketProjection = @(
+        'COMPETITION',
+        'EVENT',
+        'EVENT_TYPE',
+        'MARKET_START_TIME',
+        'MARKET_DESCRIPTION',
+        'RUNNER_DESCRIPTION',
+        'RUNNER_METADATA'
+    )
 
-    # Dynamically construct the body
+    # Setup base params
     $Body = @{
-        filter = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listMarketCatalogue"
+        params  = @{
+            marketProjection = $marketProjection
+            maxResults = 1000
+            filter = @{
+            }
         }
-        marketProjection = $marketProjection
-        maxResults = 1000
     }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.filter.Add($_.Key, $_.Value)
+        $Body.params.filter.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -163,13 +182,13 @@ Function Get-MarketCatalogue {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

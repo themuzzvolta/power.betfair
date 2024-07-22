@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-MarketBook
+# Get-BetfairCurrentOrder
 
 ## SYNOPSIS
 Returns a list of dynamic data about markets.
@@ -14,11 +14,10 @@ Dynamic data includes prices, the status of the market, the status of selections
 ## SYNTAX
 
 ```
-Get-MarketBook [-marketIds] <String[]> [[-priceProjection] <Hashtable>] [[-orderProjection] <String>]
- [[-matchProjection] <String>] [[-includeOverallPosition] <Boolean>]
- [[-partitionMatchedByStrategyRef] <Boolean>] [[-customerStrategyRefs] <String[]>] [[-currencyCode] <String>]
- [[-locale] <String>] [[-matchedSince] <DateTime>] [[-betIds] <String[]>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-BetfairCurrentOrder [[-betIds] <String[]>] [[-marketIds] <String[]>] [[-orderProjection] <String>]
+ [[-customerOrderRefs] <String[]>] [[-customerStrategyRefs] <String[]>] [[-dateRange] <Hashtable>]
+ [[-orderBy] <String>] [[-sortDir] <String>] [[-fromRecord] <Int32>] [[-recordCount] <Int32>]
+ [[-includeItemDescription] <Boolean>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,12 +28,29 @@ Dynamic data includes prices, the status of the market, the status of selections
 
 ### EXAMPLE 1
 ```
-Get-MarketBook -marketIds "1477", "1566"
+Get-BetfairCurrentOrder
 ```
 
-Get-MarketBook -marketIds "1477", "1566"
+Get-BetfairCurrentOrder -marketIds "1477", "1566"
 
 ## PARAMETERS
+
+### -betIds
+If you ask for orders, restricts the results to orders with the specified bet IDs.
+Omitting this parameter means that all bets will be included in the response.
+Please note: A maximum of 250 betId's can be provided at a time.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -marketIds
 One or more market ids.
@@ -42,21 +58,6 @@ The number of markets returned depends on the amount of data you request via the
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -priceProjection
-The projection of price data you want to receive in the response.
-
-```yaml
-Type: Hashtable
 Parameter Sets: (All)
 Aliases:
 
@@ -82,49 +83,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -matchProjection
-If you ask for orders, specifies the representation of matches.
+### -customerOrderRefs
+Optionally restricts the results to the specified customer order references.
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 4
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -includeOverallPosition
-If you ask for orders, returns matches for each selection.
-Defaults to true if unspecified.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -partitionMatchedByStrategyRef
-If you ask for orders, returns the breakdown of matches by strategy for each selection.
-Defaults to false if unspecified.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -140,15 +109,55 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -dateRange
+Optionally restricts the results to be from/to the specified date, these dates are contextual to the orders being returned
+and therefore the dates used to filter on will change to placed,
+matched, voided or settled dates depending on the orderBy.
+This date is inclusive,
+i.e.
+if an order was placed on exactly this date (to the millisecond) then it will be included in the results.
+If the from is later than the to, no results will be returned
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -orderBy
+Specifies how the results will be ordered.
+If no value is passed in, it defaults to BY_BET.
+Also acts as a filter such that only orders with a valid value in the field being ordered by will be returned
+(i.e.
+BY_VOID_TIME returns only voided orders, BY_SETTLED_TIME (applies to partially settled markets) returns only
+settled orders and BY_MATCH_TIME returns only orders with a matched date (voided, settled, matched orders)).
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -currencyCode
-A Betfair standard currency code.
-If not specified, the default currency code is used.
+### -sortDir
+Include sortDir
 
 ```yaml
 Type: String
@@ -162,52 +171,47 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -locale
-The language used for the response.
-If not specified, the default is returned.
+### -fromRecord
+from as a hashtable
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 9
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -matchedSince
-If you ask for orders, restricts the results to orders that have at least one fragment matched since
-the specified date (all matched fragments of such an order will be returned even if some were matched before the specified date).
-All EXECUTABLE orders will be returned regardless of matched date.
+### -recordCount
+Include recordCount
 
 ```yaml
-Type: DateTime
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 10
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -betIds
-If you ask for orders, restricts the results to orders with the specified bet IDs.
-Omitting this parameter means that all bets will be included in the response.
-Please note: A maximum of 250 betId's can be provided at a time.
+### -includeItemDescription
+Include description
 
 ```yaml
-Type: String[]
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 11
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-Competition
+# Get-BetfairCompetition
 
 ## SYNOPSIS
 Returns a list of Competitions.
@@ -13,7 +13,7 @@ Returns a list of Competitions.
 ## SYNTAX
 
 ```
-Get-Competition [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
+Get-BetfairCompetition [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
  [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>] [[-bspOnly] <Boolean>]
  [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>] [[-marketBettingTypes] <String[]>]
  [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>] [[-marketStartTime] <Hashtable>]
@@ -28,13 +28,17 @@ Currently only Football markets have an associated competition.
 
 ### EXAMPLE 1
 ```
-Get-Competition -Username "john.snow@got.com" -Password $secureString -APIKey $apiKey
+Get-BetfairCompetition -textQuery "rugby"
 ```
+
+Get-BetfairCompetition -textQuery "rugby"
 
 ## PARAMETERS
 
 ### -textQuery
-{{ Fill textQuery Description }}
+Restrict markets by any text associated with the Event name.
+You can include a wildcard (*) character as long as it is not the first character.
+Please note - the textQuery field doesn't evaluate market or selection names.
 
 ```yaml
 Type: String
@@ -49,7 +53,8 @@ Accept wildcard characters: False
 ```
 
 ### -eventTypeIds
-{{ Fill eventTypeIds Description }}
+Restrict markets by event type associated with the market.
+(i.e., Football, Hockey, etc)
 
 ```yaml
 Type: String[]
@@ -64,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -eventIds
-{{ Fill eventIds Description }}
+Restrict markets by the event id associated with the market.
 
 ```yaml
 Type: String[]
@@ -79,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -competitionIds
-{{ Fill competitionIds Description }}
+Restrict markets by the competitions associated with the market.
 
 ```yaml
 Type: String[]
@@ -94,7 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -marketIds
-{{ Fill marketIds Description }}
+Restrict markets by the market id associated with the market.
 
 ```yaml
 Type: String[]
@@ -109,7 +114,8 @@ Accept wildcard characters: False
 ```
 
 ### -venues
-{{ Fill venues Description }}
+Restrict markets by the venue associated with the market.
+Currently, only Horse & Greyhound racing markets have venues.
 
 ```yaml
 Type: String[]
@@ -124,7 +130,8 @@ Accept wildcard characters: False
 ```
 
 ### -bspOnly
-{{ Fill bspOnly Description }}
+Restrict to bsp markets only, if True or non-bsp markets if False.
+If not specified then returns both BSP and non-BSP markets
 
 ```yaml
 Type: Boolean
@@ -139,7 +146,8 @@ Accept wildcard characters: False
 ```
 
 ### -turnInPlayEnabled
-{{ Fill turnInPlayEnabled Description }}
+Restrict to markets that will turn in play if True or will not turn in play if false.
+If not specified, returns both.
 
 ```yaml
 Type: Boolean
@@ -154,7 +162,8 @@ Accept wildcard characters: False
 ```
 
 ### -inPlayOnly
-{{ Fill inPlayOnly Description }}
+Restrict to markets that are currently in play if True or are not currently in play if false.
+If not specified, returns both.
 
 ```yaml
 Type: Boolean
@@ -169,7 +178,8 @@ Accept wildcard characters: False
 ```
 
 ### -marketBettingTypes
-{{ Fill marketBettingTypes Description }}
+Restrict to markets that match the betting type of the market (i.e.
+Odds, Asian Handicap Singles, Asian Handicap Doubles or Line)
 
 ```yaml
 Type: String[]
@@ -184,7 +194,8 @@ Accept wildcard characters: False
 ```
 
 ### -marketCountries
-{{ Fill marketCountries Description }}
+Restrict to markets that are in the specified country or countries. 
+Please note: the default value is 'GB' when the correct country code cannot be determined.
 
 ```yaml
 Type: String[]
@@ -199,7 +210,9 @@ Accept wildcard characters: False
 ```
 
 ### -marketTypeCodes
-{{ Fill marketTypeCodes Description }}
+Restrict to markets that match the type of the market (i.e., MATCH_ODDS, HALF_TIME_SCORE).
+You should use this instead of relying on the market name as the market type codes are the same in all locales.
+Please note: All market types are available via the listMarketTypes operations
 
 ```yaml
 Type: String[]
@@ -214,7 +227,7 @@ Accept wildcard characters: False
 ```
 
 ### -marketStartTime
-@{from = \[datetime\]$from; to = \[datetime\]$to}
+Restrict to markets with a market start time before or after the specified date
 
 ```yaml
 Type: Hashtable
@@ -229,7 +242,7 @@ Accept wildcard characters: False
 ```
 
 ### -withOrders
-{{ Fill withOrders Description }}
+Restrict to markets where I have one or more orders in these states.
 
 ```yaml
 Type: String[]
@@ -244,7 +257,8 @@ Accept wildcard characters: False
 ```
 
 ### -raceTypes
-{{ Fill raceTypes Description }}
+Restrict to markets of a specific raceType.
+Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
 ```yaml
 Type: String[]

@@ -1,7 +1,8 @@
-Function Get-EventType {
+Function Get-BetfairEvent {
+
     <#
     .SYNOPSIS
-    Returns a list of Events (i.e, Reading vs. Man United) associated with the markets selected by the MarketFilter.
+    Returns a list of Events.
 
     .DESCRIPTION
     Returns a list of Events (i.e, Reading vs. Man United) associated with the markets selected by the MarketFilter.
@@ -57,15 +58,15 @@ Function Get-EventType {
     Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
     .EXAMPLE
-    Get-EventType -eventTypeId 1477
+    Get-BetfairEvent -eventIds "1"
 
-    Get-EventType -eventTypeId 1477
+    Get-BetfairEvent -eventIds "1"
 
     .NOTES
     General notes
     #>
 
-    [CmdletBinding(DefaultParameterSetName="Username")][OutputType('System.Management.Automation.PSObject')]
+    [CmdletBinding()][OutputType('System.Management.Automation.PSObject')]
 
     Param (
 
@@ -131,7 +132,13 @@ Function Get-EventType {
 
     )
 
-    $Path = '/betting/rest/v1.0/listEventTypes/'
+    # Check for auth
+    If (-not $Script:BetFair){
+        Throw 'Please authenticate to Betfair using the cmdlet "Connect-Betfair"'
+    }
+
+    # Use Betting endpoint
+    $Path = '/betting/json-rpc/v1'
 
     # Setup the headers
     $Header = @{
@@ -141,14 +148,19 @@ Function Get-EventType {
         'X-Authentication' = $BetFair.token
     }
 
-    # Dynamically construct the body
+    # Setup base params
     $Body = @{
-        filter = @{
+        jsonrpc = "2.0"
+        method  = "SportsAPING/v1.0/listEvents"
+        params  = @{
+            filter = @{
+            }
         }
     }
 
+    # Dynamically construct the body
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
-        $Body.filter.Add($_.Key, $_.Value)
+        $Body.params.filter.Add($_.Key, $_.Value)
     }
 
     # Put it all together
@@ -156,13 +168,13 @@ Function Get-EventType {
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 99
+        Body    = $Body | ConvertTo-Json -Depth 10
     }
 
     # Send it
     $Response = Invoke-RestMethod @Params
 
     # Show me the money
-    return $Response
+    return $Response.result
 
 }

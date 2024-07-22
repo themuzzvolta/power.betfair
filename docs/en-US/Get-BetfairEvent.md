@@ -5,15 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-Country
+# Get-BetfairEvent
 
 ## SYNOPSIS
-Returns a list of Countries associated with the markets selected by the MarketFilter.
+Returns a list of Events.
 
 ## SYNTAX
 
 ```
-Get-Country [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
+Get-BetfairEvent [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <String[]>]
  [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>] [[-bspOnly] <Boolean>]
  [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>] [[-marketBettingTypes] <String[]>]
  [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>] [[-marketStartTime] <Hashtable>]
@@ -21,14 +21,17 @@ Get-Country [[-textQuery] <String>] [[-eventTypeIds] <String[]>] [[-eventIds] <S
 ```
 
 ## DESCRIPTION
-Returns a list of Countries associated with the markets selected by the MarketFilter.
+Returns a list of Events (i.e, Reading vs.
+Man United) associated with the markets selected by the MarketFilter.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-Country -textQuery "AU"
+Get-BetfairEvent -eventIds "1"
 ```
+
+Get-BetfairEvent -eventIds "1"
 
 ## PARAMETERS
 
