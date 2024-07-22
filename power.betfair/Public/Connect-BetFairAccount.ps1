@@ -1,20 +1,20 @@
 Function Connect-BetfairAccount {
     <#
     .SYNOPSIS
-    Function for creating an authenticated session to BetFair
+    Function for creating an authenticated session to BetFair.
 
     .DESCRIPTION
     The API login endpoint is the simplest method of integration for most applications in terms of expected development time.
     It will allow a user to provide a username and password or a username and (password + 2 factor auth code) if they have strong authentication enabled.
 
     .PARAMETER Username
-    The BetFair username
+    The BetFair username.
 
     .PARAMETER Password
-    The password for the specified user
+    The password for the specified user.
 
     .PARAMETER APIKey
-    The API Key value
+    The API Key value.
 
     .EXAMPLE
     Connect-BetFairAccount -Username "john.snow@got.com" -Password $secureString -APIKey $apiKey
@@ -22,7 +22,7 @@ Function Connect-BetfairAccount {
     Connect-BetFairAccount -Username "john.snow@got.com" -Password $secureString -APIKey $apiKey
 
     .NOTES
-    General notes
+    General notes.
     #>
 
     [CmdletBinding(DefaultParameterSetName="Username")][OutputType('System.Management.Automation.PSObject')]

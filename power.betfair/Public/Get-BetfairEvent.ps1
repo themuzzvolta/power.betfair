@@ -13,7 +13,7 @@ Function Get-BetfairEvent {
     Please note - the textQuery field doesn't evaluate market or selection names.
 
     .PARAMETER eventTypeIds
-    Restrict markets by event type associated with the market. (i.e., Football, Hockey, etc)
+    Restrict markets by event type associated with the market. (i.e., Football, Hockey, etc).
 
     .PARAMETER eventIds
     Restrict markets by the event id associated with the market.
@@ -28,7 +28,7 @@ Function Get-BetfairEvent {
     Restrict markets by the venue associated with the market. Currently, only Horse & Greyhound racing markets have venues.
 
     .PARAMETER bspOnly
-    Restrict to bsp markets only, if True or non-bsp markets if False. If not specified then returns both BSP and non-BSP markets
+    Restrict to bsp markets only, if True or non-bsp markets if False. If not specified then returns both BSP and non-BSP markets.
 
     .PARAMETER turnInPlayEnabled
     Restrict to markets that will turn in play if True or will not turn in play if false. If not specified, returns both.
@@ -37,7 +37,7 @@ Function Get-BetfairEvent {
     Restrict to markets that are currently in play if True or are not currently in play if false. If not specified, returns both.
 
     .PARAMETER marketBettingTypes
-    Restrict to markets that match the betting type of the market (i.e. Odds, Asian Handicap Singles, Asian Handicap Doubles or Line)
+    Restrict to markets that match the betting type of the market (i.e. Odds, Asian Handicap Singles, Asian Handicap Doubles or Line).
 
     .PARAMETER marketCountries
     Restrict to markets that are in the specified country or countries.  Please note: the default value is 'GB' when the correct country code cannot be determined.
@@ -45,10 +45,10 @@ Function Get-BetfairEvent {
     .PARAMETER marketTypeCodes
     Restrict to markets that match the type of the market (i.e., MATCH_ODDS, HALF_TIME_SCORE).
     You should use this instead of relying on the market name as the market type codes are the same in all locales.
-    Please note: All market types are available via the listMarketTypes operations
+    Please note: All market types are available via the listMarketTypes operations.
 
     .PARAMETER marketStartTime
-    Restrict to markets with a market start time before or after the specified date
+    Restrict to markets with a market start time before or after the specified date.
 
     .PARAMETER withOrders
     Restrict to markets where I have one or more orders in these states.

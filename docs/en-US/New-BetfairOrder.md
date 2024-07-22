@@ -16,13 +16,13 @@ Places an order on the Betfair Exchange.
 ```
 New-BetfairOrder -marketId <String> -orderType <String> [-handicap <Double>] -selectionId <String>
  -side <String> -price <Double> -size <Double> -persistenceType <String> [-customerOrderRef <String>]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ClassParam
 ```
-New-BetfairOrder -marketId <String> [-customerOrderRef <String>] -instructions <PSObject>
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-BetfairOrder -marketId <String> [-customerOrderRef <String>] -instructions <Array>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -184,41 +184,11 @@ Accept wildcard characters: False
 {{ Fill instructions Description }}
 
 ```yaml
-Type: PSObject
+Type: Array
 Parameter Sets: ClassParam
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

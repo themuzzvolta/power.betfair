@@ -31,10 +31,15 @@ Function New-BetfairOrder {
     (Optional) A custom tag for the bet.
 
     .PARAMETER handicap
-    (Optional) A handicap
+    (Optional) A handicap.
 
     .PARAMETER instructions
-    Custom object to place betfair order
+    Custom object to place betfair order.
+
+    .EXAMPLE
+    New-BetfairOrder -marketId "1.23456789" -selectionId "98765432" -side "BACK" -orderType "LIMIT" -price 2.0 -size 10
+
+    New-BetfairOrder -marketId "1.23456789" -selectionId "98765432" -side "LAY" -orderType "LIMIT" -price 3.5 -size 5 -persistenceType "PERSIST"
 
     # Example usage:
     $instruction = [placeInstruction]::new()
@@ -51,14 +56,12 @@ Function New-BetfairOrder {
     $instruction.minFillSize = 5.0
     $instruction.betTargetType = [BetTargetType]::BACKERS_PROFIT
 
-    .EXAMPLE
-    New-BetfairOrder -marketId "1.23456789" -selectionId "98765432" -side "BACK" -orderType "LIMIT" -price 2.0 -size 10
+    New-BetfairOrder -marketId "1.23456789" -instructions @($instructions)
 
-    New-BetfairOrder -marketId "1.23456789" -selectionId "98765432" -side "LAY" -orderType "LIMIT" -price 3.5 -size 5 -persistenceType "PERSIST"
 
 #>
 
-    [CmdletBinding(SupportsShouldProcess)][OutputType('System.Management.Automation.PSObject')]
+    [CmdletBinding()][OutputType('System.Management.Automation.PSObject')]
 
     Param (
 
@@ -100,7 +103,7 @@ Function New-BetfairOrder {
 
         [parameter(Mandatory=$true, ParameterSetName='ClassParam')]
         [ValidateNotNullOrEmpty()]
-        [psCustomObject]$instructions
+        [array]$instructions
 
     )
 
