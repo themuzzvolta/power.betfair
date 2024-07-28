@@ -36,7 +36,6 @@ Function Get-BetfairAccountDetails {
             'X-Application' = $BetFair.product
             'X-Authentication' = $BetFair.token
             'Accept-Encoding' = 'gzip, deflate'
-            'Connection' = 'keep-alive'
         }
 
     }
