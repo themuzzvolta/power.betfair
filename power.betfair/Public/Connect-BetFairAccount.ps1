@@ -56,7 +56,6 @@ Function Connect-BetfairAccount {
         'Accept' = 'application/json'
         'X-Application' = $APIKey
         'Accept-Encoding' = 'gzip, deflate'
-        'Connection' = 'keep-alive'
     }
 
     # Define the payload

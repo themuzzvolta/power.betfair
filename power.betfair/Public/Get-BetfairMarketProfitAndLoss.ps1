@@ -66,7 +66,6 @@ Function Get-BetfairMarketProfitAndLoss {
         'X-Application' = $BetFair.product
         'X-Authentication' = $BetFair.token
         'Accept-Encoding' = 'gzip, deflate'
-        'Connection' = 'keep-alive'
     }
 
     # Setup base params

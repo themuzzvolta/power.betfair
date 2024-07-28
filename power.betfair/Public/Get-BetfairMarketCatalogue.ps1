@@ -149,7 +149,6 @@ Function Get-BetfairMarketCatalogue {
         'X-Application' = $BetFair.product
         'X-Authentication' = $BetFair.token
         'Accept-Encoding' = 'gzip, deflate'
-        'Connection' = 'keep-alive'
     }
 
     $marketProjection = @(
