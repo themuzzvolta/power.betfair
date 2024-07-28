@@ -146,6 +146,8 @@ Function Get-BetfairEvent {
         'Accept' = 'application/json'
         'X-Application' = $BetFair.product
         'X-Authentication' = $BetFair.token
+        'Accept-Encoding' = 'gzip, deflate'
+        'Connection' = 'keep-alive'
     }
 
     # Setup base params
