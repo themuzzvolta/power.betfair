@@ -27,8 +27,8 @@ Function New-BetfairOrder {
     .PARAMETER persistenceType
     (Optional) The persistence type for the bet, e.g., 'LAPSE', 'PERSIST', or 'MARKET_ON_CLOSE'. Default is 'LAPSE'.
 
-    .PARAMETER customerOrderRef
-    (Optional) A custom tag for the bet.
+    .PARAMETER CustomerStrategyRef
+    (Optional) A custom tag for the bet based on strategy. Limited to 15 characters.
 
     .PARAMETER handicap
     (Optional) A handicap.
@@ -99,7 +99,7 @@ Function New-BetfairOrder {
 
         [parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
-        [String]$customerOrderRef,
+        [String]$customerStrategyRef,
 
         [parameter(Mandatory=$true, ParameterSetName='ClassParam')]
         [ValidateNotNullOrEmpty()]
@@ -126,53 +126,57 @@ Function New-BetfairOrder {
 
 
     # Params to iterate through if using HelperParams
-    $base = 'marketId','customerOrderRef'
+    $base = 'marketId','customerStrategyRef'
     $instruction = 'selectionId','handicap','side','orderType'
     $limitOrder = 'price','size','persistenceType'
 
     # Dynamically construct the body
-    Switch ($PSCmdlet.ParameterSetName){
-        'ClassParam' {
-            $Body = @{
-                params = @{}
-            }
-            $PSBoundParameters.GetEnumerator() | ForEach-Object {
-                $Body.params.Add($_.Key, $_.Value)
-            }
-        }
-        'HelperParam' {
-            $Body = @{
-                params = @{
-                    instructions = @(
-                        @{
-                            limitOrder = @{
-                            }
-                        }
-                    )
+
+    $Body = @{
+        params = @{
+            instructions = @(
+                @{
+                    limitOrder = @{
+                    }
                 }
-            }
-            $PSBoundParameters.GetEnumerator()  | Where-Object {$_.Key -contains $base} | ForEach-Object {
-                $Body.params.Add($_.Key, $_.Value)
-            }
-            $PSBoundParameters.GetEnumerator()  | Where-Object {$_.Key -contains $instruction} | ForEach-Object {
-                $Body.params.instructions.Add($_.Key, $_.Value)
-            }
-            $PSBoundParameters.GetEnumerator()  | Where-Object {$_.Key -contains $limitOrder} | ForEach-Object {
-                $Body.params.instructions.limitOrder.Add($_.Key, $_.Value)
-            }
+            )
         }
     }
+
+    $PSBoundParameters.GetEnumerator().ForEach({
+        If($_.key -in $base){
+            $Body.params.Add($_.Key, $_.Value)
+        }
+    })
+
+
+    $PSBoundParameters.GetEnumerator().ForEach({
+        If($_.key -in $instruction){
+            $Body.params.instructions[0].Add($_.Key, $_.Value)
+        }
+    })
+
+    $PSBoundParameters.GetEnumerator().ForEach({
+        If($_.key -in $limitOrder){
+            $Body.params.instructions[0].limitOrder.Add($_.Key, $_.Value)
+        }
+    })
+
+
+
 
     # Setup base params
     $Body.Add('jsonrpc','2.0')
     $Body.Add('method','SportsAPING/v1.0/placeOrders')
+
+    $Body|ConvertTo-Json -Depth 10
 
     # Put it all together
     $Params = @{
         URI     = $BetFair.uri + $Path
         Method  = 'POST'
         Headers = $Header
-        Body    = $Body | ConvertTo-Json -Depth 10
+        Body    = $Body | ConvertTo-Json -Depth 99
     }
 
     # Send it

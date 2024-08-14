@@ -59,6 +59,10 @@ Function Get-BetfairMarketCatalogue {
     Restrict to markets of a specific raceType.
     Valid values are - Harness, Flat, Hurdle, Chase, Bumper, NH Flat, Steeple (AUS/NZ races), and NO_VALUE (when no valid race type has been mapped).
 
+    .PARAMETER includeMarketDescription
+    If True then the results will include a description of each market.
+
+
     .EXAMPLE
     Get-BetfairMarketCatalogue -textQuery "AU"
 
@@ -130,7 +134,11 @@ Function Get-BetfairMarketCatalogue {
 
         [parameter(Mandatory=$false)]
         [ValidateSet('Harness', 'Flat', 'Hurdle', 'Chase', 'Bumper', 'NH Flat', 'Steeple (AUS/NZ races)', 'NO_VALUE')]
-        [String[]]$raceTypes
+        [String[]]$raceTypes,
+
+        [parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Switch]$includeMarketDescription
 
     )
 
@@ -156,10 +164,13 @@ Function Get-BetfairMarketCatalogue {
         'EVENT',
         'EVENT_TYPE',
         'MARKET_START_TIME',
-        'MARKET_DESCRIPTION',
         'RUNNER_DESCRIPTION',
         'RUNNER_METADATA'
     )
+
+    If($includeMarketDescription){
+        $marketProjection += 'MARKET_DESCRIPTION'
+    }
 
     # Setup base params
     $Body = @{
@@ -167,16 +178,16 @@ Function Get-BetfairMarketCatalogue {
         method  = "SportsAPING/v1.0/listMarketCatalogue"
         params  = @{
             marketProjection = $marketProjection
-            maxResults = 1000
+            maxResults = 100
             filter = @{
             }
         }
     }
 
     # Dynamically construct the body
-    $PSBoundParameters.GetEnumerator() | ForEach-Object {
+    $PSBoundParameters.GetEnumerator().Where( {$_.Key -ne 'includeMarketDescription'}).ForEach({
         $Body.params.filter.Add($_.Key, $_.Value)
-    }
+    })
 
     # Put it all together
     $Params = @{

@@ -58,7 +58,7 @@ Function Get-BetfairAccountStatement {
         # Dynamically construct the body
         $Body = @{
             jsonrpc = '2.0'
-            method  = 'SportsAPING/v1.0/getAccountStatement'
+            method  = 'AccountAPING/v1.0/getAccountStatement'
             params  = @{
                 recordCount = 100
             }
