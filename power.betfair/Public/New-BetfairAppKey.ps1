@@ -52,7 +52,7 @@ Function New-BetfairAppKey {
         # Dynamically construct the body
         $Body = @{
             jsonrpc = '2.0'
-            method  = 'SportsAPING/v1.0/createDeveloperAppKeys'
+            method  = 'AccountAPING/v1.0/createDeveloperAppKeys'
             params  = @{}
         }
 

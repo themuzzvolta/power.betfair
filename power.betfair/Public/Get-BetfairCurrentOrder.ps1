@@ -133,9 +133,9 @@ Function Get-BetfairCurrentOrder {
     }
 
     # Dynamically construct the body
-    $PSBoundParameters.GetEnumerator() | ForEach-Object {
+    $PSBoundParameters.GetEnumerator().ForEach( {
         $Body.params.Add($_.Key, $_.Value)
-    }
+    } )
 
     # Put it all together
     $Params = @{

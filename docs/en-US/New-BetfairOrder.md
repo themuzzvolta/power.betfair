@@ -15,13 +15,13 @@ Places an order on the Betfair Exchange.
 ### HelperParam
 ```
 New-BetfairOrder -marketId <String> -orderType <String> [-handicap <Double>] -selectionId <String>
- -side <String> -price <Double> -size <Double> -persistenceType <String> [-customerOrderRef <String>]
+ -side <String> -price <Double> -size <Double> -persistenceType <String> [-customerStrategyRef <String>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ClassParam
 ```
-New-BetfairOrder -marketId <String> [-customerOrderRef <String>] -instructions <Array>
+New-BetfairOrder -marketId <String> [-customerStrategyRef <String>] -instructions <Array>
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -165,8 +165,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -customerOrderRef
-(Optional) A custom tag for the bet.
+### -customerStrategyRef
+{{ Fill customerStrategyRef Description }}
 
 ```yaml
 Type: String

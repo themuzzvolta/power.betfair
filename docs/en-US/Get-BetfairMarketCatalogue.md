@@ -17,7 +17,8 @@ Get-BetfairMarketCatalogue [[-textQuery] <String>] [[-eventTypeIds] <String[]>] 
  [[-competitionIds] <String[]>] [[-marketIds] <String[]>] [[-venues] <String[]>] [[-bspOnly] <Boolean>]
  [[-turnInPlayEnabled] <Boolean>] [[-inPlayOnly] <Boolean>] [[-marketBettingTypes] <String[]>]
  [[-marketCountries] <String[]>] [[-marketTypeCodes] <String[]>] [[-marketStartTime] <Hashtable>]
- [[-withOrders] <String[]>] [[-raceTypes] <String[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-withOrders] <String[]>] [[-raceTypes] <String[]>] [-includeMarketDescription]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -270,6 +271,21 @@ Aliases:
 Required: False
 Position: 15
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -includeMarketDescription
+{{ Fill includeMarketDescription Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.7] 14/08/2024
+
+Fixed account operations JSON-RPC method
+
 ## [0.1.6] 28/07/2024
 
 Added compression and keep-alive for all requests
